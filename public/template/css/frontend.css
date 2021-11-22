@@ -1,0 +1,204 @@
+/* common css--------------------------------------  */
+body {
+  min-height: 100vh;
+   height: auto;
+   padding-bottom: 30px;
+   clear: both;
+   /* background-color: aliceblue; */
+}
+.titlebar{
+  display: flex;
+  flex-direction: row;
+  padding:10px 0px;
+  background-color: rgb(229,227,221);
+}
+
+.titlebar .title{
+  flex-grow: 1;
+}
+.titlebar .title h4{
+  text-align: center;
+}
+
+.my_cus_btn{
+  border-radius: 8.25rem !important;
+}
+
+
+/* end --------------------------------------------- */
+
+
+.navbar{
+  background-color: #fff!important;
+  border-top: 1px solid #eee;
+}
+.mynav{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.mynav-link{
+  color:#333
+}
+.mynav-link span{
+  display: flex;
+}
+
+/* banner start---------------------------------------- */
+.banner{
+ height: 200px;
+ background-color: #333;
+}
+
+/* order form start ---------- */
+input,select{
+  border: none !important;
+  
+  display: flex;
+  flex-wrap: wrap;
+}
+
+input{
+  padding-left: 13px !important;
+  height:50px;
+}
+
+
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  white-space:pre-line;  
+  position:relative;
+  top:-7px;
+  
+}
+::-moz-placeholder { /* Firefox 19+ */
+     white-space:pre-line;  
+  position:relative;
+  top:-7px;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    white-space:pre-line;  
+  position:relative;
+  top:-7px;
+}
+:-moz-placeholder { /* Firefox 18- */
+     white-space:pre-line;  
+  position:relative;
+  top:-7px;
+}
+
+.cus-input-fromControl{
+  display: flex;
+  align-items: center;
+}
+
+.addressForm{
+  display: flex;
+}
+
+.addressForm a{
+  display: flex;
+  align-self: center;
+}
+.slow-animation {
+  /* animation: swal2-show 0.75s linear !important;  */
+  animation: swal2-show 0.75s linear !important;
+  
+}
+
+.slow-animation-2 {
+  /* animation: swal2-show 0.75s linear !important;  */
+  animation: swal2-hide 0.9s linear !important;
+  
+}
+
+
+.alert-title:{
+  color:#fff
+}
+
+/* user info start ------------------------------------ */
+.user_info_div{
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.avatar{
+  width: 80px;
+  height: 80px;
+  background-color: #333;
+  border-radius: 50%;
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.user_info_div .user_info_content{
+  margin-left: 20px;
+}
+
+
+/* user order tab -------------------------------- */
+
+.my-cus-tab{
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-pills .nav-link,
+.nav-pills .show>.nav-link{
+  color:#333;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link
+{
+  background-color:transparent!important;
+  color:#3498db;
+  border-radius: 0px;
+  border-bottom:1px solid #3498db;
+}
+
+/* order list card---------- */
+.my-card{
+  --color:#efefef57;
+  background-color: var(--color);
+  border:1px solid var(--color);
+  border-radius: .67rem;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+}
+.my-card .my-card-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.my-card .my-card-header .title{
+  text-transform: uppercase;
+}
+.my-card .my-card-header .fa-chevron-right{
+  color: darkgray;
+}
+.my-card .my-card-header .status{
+  color: orange;
+}
+
+.my-card .card-body div.row{
+ margin: 12px 0px;
+}
+
+
+
+
+
+@media (max-width: 990px) {
+				option {
+    max-width: 100%;
+    overflow: hidden!important;
+    word-wrap: normal !important;
+    white-space: normal;
+}
+				
+
+
+				
+			}
