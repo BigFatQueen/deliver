@@ -40,7 +40,8 @@ class CityController extends Controller
 
        
         City::create([
-            'name'=>$request->city
+            'name'=>$request->city,
+            'abb'=>$request->abb,
         ]);
         return redirect()->route('city.index');
     }
@@ -78,6 +79,7 @@ class CityController extends Controller
     {
         $city=City::find($id);
         $city->name=$request->ecity;
+        $city->abb=$request->eabb;
         $city->save();
         return back();
     }

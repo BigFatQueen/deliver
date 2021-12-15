@@ -38,4 +38,16 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    // protected function unauthenticated($request, AuthenticationException $exception)
+    // {
+    //     if ($request->expectsJson()) {
+    //         return response()->json(['error' => 'Unauthenticated.'], 401);
+    //     }
+    //     if ($request->is('staff') || $request->is('staff/*')) {
+    //         return redirect()->guest('/staff/login');
+    //     }
+        
+    //     return redirect()->guest(route('login'));
+    // }
 }

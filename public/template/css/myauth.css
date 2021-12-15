@@ -1,0 +1,86 @@
+.wrapper {
+    margin-top: 2vh;
+    display: grid;
+    place-content: center;
+}
+
+.wrapper h5 {
+    text-align: center;
+    margin-bottom: 2vh;
+}
+
+.cus-container {
+    max-width: 90vw;
+    width: 400px;
+    text-align: center;
+    position: relative;
+}
+
+.logo-img {
+    width: 100%;
+    background-image: url('https://cdni.iconscout.com/illustration/premium/thumb/delivery-man-giving-delivery-box-to-woman-3035745-2535111.png');
+    height: 200px;
+    background-position: center center;
+    background-size: cover;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.v-success {
+    height: 40px;
+    width: 40px;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/190/190411.png');
+    background-position: center;
+    background-size: cover;
+    top: 10%;
+    right: 20%;
+    position: absolute;
+    visibility: hidden;
+}
+
+.sub-title {
+    font-size: 0.975rem;
+    text-align: center;
+    color: darkblue;
+}
+
+.sub-title2 {
+    font-size: 0.725rem;
+    text-align: center;
+}
+
+.form-div {
+    text-align: start;
+}
+
+
+/* phone vieify process------------------ */
+
+.phone-img {
+    border-radius: 50%;
+    width: 200px;
+    background-image: url(https://i.pinimg.com/originals/c5/f7/f6/c5f7f63801068e0382e7cabae7231e7a.png);
+    height: 200px;
+    background-position: center center;
+    background-size: cover;
+    margin: 20px 0 20px 0;
+    opacity: 0.9;
+    display: block;
+    margin: auto;
+}
+
+.sub-title-phone {
+    font-size: 0.775rem;
+    text-align: center;
+    color: darkblue;
+}
+
+.code-div {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px 0px;
+}
+
+.show {
+    visibility: visible;
+}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Models\Order;
+use Auth;
 
 class FrontEndController extends Controller
 {
@@ -21,9 +22,10 @@ class FrontEndController extends Controller
     }
 
     public function userOrderList(){
-        $orders=Order::where('user_id',3)->get();
+
+        $orders=Order::where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
        
-        $orders=$orders->groupBy('order_code');
+        /*$orders=$orders->groupBy('order_code');
         $newarray=[];$codes='';
         
         foreach($orders as $k=>$order)
@@ -58,12 +60,26 @@ class FrontEndController extends Controller
       
        
        
-       $newOrders=$newarray;
+       $newOrders=$newarray;*/
+       $newOrders=$orders;
 
         
 
         
         
         return view('user.order_list_page',compact('newOrders'));
+    }
+
+    public function orderSearch(Request $request){
+       $keyword=$request->keyword;
+
+       $orders=Order::with(['status','contact','contact.city','user'])->where('code', 'LIKE', "%{$keyword}%")->get();
+
+       if(count($orders) < 1){
+        return response()->json(['status'=>404,'data'=>$orders]);
+       }else{
+           return response()->json(['status'=>200,'data'=>$orders]);
+       }
+       
     }
 }

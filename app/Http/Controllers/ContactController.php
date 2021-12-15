@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Models\City;
+use App\Models\User;
+use Auth;
 
 class ContactController extends Controller
 {
@@ -25,13 +27,13 @@ class ContactController extends Controller
      */
     public function create()
     {
-       
-         if (!session()->has('url.intended')) {
-          session(['url.intended' => url()->previous()]);
-         }
-        $contact= new Contact();
-        $cities= City::all();
-        return view('contact.contact_create',compact('contact','cities'));  
+
+        if (!session()->has('url.intended')) {
+            session(['url.intended' => url()->previous()]);
+        }
+        $contact = new Contact();
+        $cities = City::all();
+        return view('contact.contact_create', compact('contact', 'cities'));
     }
 
     /**
@@ -42,40 +44,50 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+        $id = null;
+        if (Auth::check()) {
+            $id = Auth::user()->id;
+        } else {
+            $id = $request->uid;
+        }
 
-         $redirect=null;
-         $request->validate([
+        // dd($id);
+        //  $redirect=null;
+        $request->validate([
             'city_id' => 'required|not_in:0',
             'fulladdress' => 'required',
         ]);
 
-        
-         
-         // dd(session()->get('url.intended')); 
-
-         if (session()->has('url.intended')) {
-                $redirectTo = session()->get('url.intended');
-                
-$prevroute = app('router')->getRoutes($redirectTo)->match(app('request')->create($redirectTo))->getName();
-             session()->forget('url.intended');
-            }
-            
-         if($prevroute =="user.order.create"){
-             return redirect($redirectTo);
-         }else{
-             return redirect('user/address/list');
-         }
+        Contact::create([
+            'full_address' => $request->fulladdress,
+            'user_id' => $id,
+            'city_id' => $request->city_id
+        ]);
 
 
-        
-       /* if ($redirectTo) {
+
+        // dd(session()->get('url.intended')); 
+
+        if (session()->has('url.intended')) {
+            $redirectTo = session()->get('url.intended');
+
+            $prevroute = app('router')->getRoutes($redirectTo)->match(app('request')->create($redirectTo))->getName();
+            session()->forget('url.intended');
+        }
+
+        if ($prevroute == "user.order.create") {
+            return redirect($redirectTo);
+        } else if ($prevroute == "admin.order.create") {
+            return redirect($redirectTo);
+        } else {
+            return redirect('user/address/list');
+        }
+
+
+
+        /* if ($redirectTo) {
             return redirect($redirectTo);
         }*/
- 
-        
-
-       
-       
     }
 
     /**
@@ -97,12 +109,12 @@ $prevroute = app('router')->getRoutes($redirectTo)->match(app('request')->create
      */
     public function edit($id)
     {
-         if (!session()->has('url.intended')) {
-          session(['url.intended' => url()->previous()]);
-         }
-        $contact=Contact::find($id);
-       $cities= City::all();
-        return view('contact.contact_create',compact('contact','cities'));  
+        if (!session()->has('url.intended')) {
+            session(['url.intended' => url()->previous()]);
+        }
+        $contact = Contact::find($id);
+        $cities = City::all();
+        return view('contact.contact_create', compact('contact', 'cities'));
     }
 
     /**
@@ -114,26 +126,24 @@ $prevroute = app('router')->getRoutes($redirectTo)->match(app('request')->create
      */
     public function update(Request $request, $id)
     {
-          $contact=Contact::find($id);
-        $contact->full_address=$request->fulladdress;
-        $contact->city_id=$request->city_id;
+        $contact = Contact::find($id);
+        $contact->full_address = $request->fulladdress;
+        $contact->city_id = $request->city_id;
         $contact->save();
 
-        
-        if (session()->has('url.intended')) {
-                $redirectTo = session()->get('url.intended');
-              
-$prevroute = app('router')->getRoutes($redirectTo)->match(app('request')->create($redirectTo))->getName();
-             session()->forget('url.intended');
-            }   
-            
-         if($prevroute =="user.order.create"){
-             return redirect($redirectTo);
-         }else{
-             return redirect('user/address/list');
-         }
-      
 
+        if (session()->has('url.intended')) {
+            $redirectTo = session()->get('url.intended');
+
+            $prevroute = app('router')->getRoutes($redirectTo)->match(app('request')->create($redirectTo))->getName();
+            session()->forget('url.intended');
+        }
+
+        if ($prevroute == "user.order.create") {
+            return redirect($redirectTo);
+        } else {
+            return redirect('user/address/list');
+        }
     }
 
     /**
@@ -144,8 +154,19 @@ $prevroute = app('router')->getRoutes($redirectTo)->match(app('request')->create
      */
     public function destroy($id)
     {
-        $contact=Contact::find($id);
+        $contact = Contact::find($id);
         $contact->delete();
         return back();
+    }
+
+    function addressCreateByUid($id)
+    {
+        if (!session()->has('url.intended')) {
+            session(['url.intended' => url()->previous()]);
+        }
+        $contact = new Contact();
+        $user = User::find($id);
+        $cities = City::all();
+        return view('admin.address.create', compact('contact', 'user', 'cities'));
     }
 }

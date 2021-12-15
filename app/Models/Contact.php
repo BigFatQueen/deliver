@@ -12,7 +12,13 @@ class Contact extends Model
     use HasFactory;
     protected $fillable=['full_address','city_id','user_id'];
 
+    protected $table="addresses";
+
     public function city(){
         return $this->belongsTo(City::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

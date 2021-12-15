@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class City extends Model
 {
     use HasFactory,SoftDeletes;
-    protected $fillable=['name'];
+    protected $fillable=['name','abb'];
 
     public function contacts(){
-        return $this->hasMany(Contact::class);
+        return $this->hasMany(Contact::class,'address_id');
     }
 }

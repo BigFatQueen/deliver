@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('recipient_name')->nullable();
             $table->string('order_date')->nullable();
             //by customer
-            $table->unsignedBigInteger('contact_id')->nullable();
+            $table->unsignedBigInteger('address_id')->nullable();
            
             //by admin
             //from
@@ -32,12 +32,13 @@ class CreateOrdersTable extends Migration
             $table->string('phone')->nullable();
             $table->unsignedBigInteger('status_id')->nullable();
             $table->text('goods')->nullable();
+            $table->text('weight')->nullable();
             $table->unsignedBigInteger('qty')->nullable();
             $table->string('price')->nullable();
             
-            $table->foreign('contact_id')
+            $table->foreign('address_id')
             ->references('id')
-            ->on('contacts')
+            ->on('addresses')
             ->onDelete('cascade');
 
             $table->foreign('user_id')

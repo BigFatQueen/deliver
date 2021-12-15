@@ -8,12 +8,9 @@
 </div>
 <div class="">
     <div class="user_info_div">
-        <div
-            class="avatar"
-            style="
+        <div class="avatar" style="
                 background-image: url('https://cdn1.vectorstock.com/i/1000x1000/31/95/user-sign-icon-person-symbol-human-avatar-vector-12693195.jpg');
-            "
-        ></div>
+            "></div>
         <div class="user_info_content">
             <h3>user_name</h3>
             <span>email:user@gmail.com</span>
@@ -21,10 +18,7 @@
     </div>
     <div>
         <ul class="list-group list-group-flush">
-            <a
-                style="text-decoration: none"
-                href="{{ route('user.address.list') }}"
-            >
+            <a style="text-decoration: none" href="{{ route('user.address.list') }}">
                 <li class="list-group-item">
                     <div class="d-flex justify-content-between py-2">
                         <span>
@@ -80,7 +74,7 @@
                     </div>
                 </li>
             </a>
-            <a>
+            <a href="route('logout')" style="text-decoration: none" onclick="event.preventDefault();document.getElementById('logoutform').closest('form').submit();">
                 <li class="list-group-item">
                     <div class="d-flex justify-content-between py-2">
                         <span>
@@ -92,9 +86,21 @@
                         </div>
                     </div>
                 </li>
+                <form method="POST" id="logoutform" class="d-inline" action="{{ route('logout') }}">
+                    @csrf
+                </form>
             </a>
         </ul>
     </div>
 </div>
 
 @endsection
+
+<a href="route('logout')" class="dropdown-item" onclick="event.preventDefault();
+                                                document.getElementById('logoutform').closest('form').submit();">
+    <i class="ni ni-user-run"></i> Log out
+
+    <form method="POST" id="logoutform" class="d-inline" action="{{ route('logout') }}">
+        @csrf
+    </form>
+</a>

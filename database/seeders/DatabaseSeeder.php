@@ -55,13 +55,24 @@ class DatabaseSeeder extends Seeder
     }
 
      public  function  citySeeding(){
-        $arrray=['Yangon','Mandalay','Sagaing'];
+        
 
-        foreach($arrray as $a){
+       
             City::create([
-                'name'=>$a
+                'name'=>'Yangon',
+                'abb'=>'YGN'
             ]);
-        }
+
+            City::create([
+                'name'=>'Mandalay',
+                'abb'=>'MDY'
+            ]);
+
+            City::create([
+                'name'=>'NAYPYITAW',
+                'abb'=>'NPT'
+            ]);
+       
     }
 
     public  function  statusSeeding(){
