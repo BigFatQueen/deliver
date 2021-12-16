@@ -23,9 +23,9 @@ class LoginController extends Controller
 
     public function processLogin(Request $request)
     {
-        //dd($request);
+        
          $credentials = $request->except(['_token']);
-         // dd($credentials);
+        
          if($this->isStaffActive($request->email)){
             //dd('now you are here!');
              if(Auth::guard('staff')->attempt($credentials))
@@ -35,7 +35,7 @@ class LoginController extends Controller
                  return redirect(RouteServiceProvider::STAFF);
             }
 
-            // dd('you failed it');
+            
 
             return redirect()->action([
                 LoginController::class,

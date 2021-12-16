@@ -2,9 +2,39 @@
 <div class="container-fluid px-4">
     <h1 class="mt-4">Orders</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-        <li class="breadcrumb-item active">Order</li>
+        <li class="breadcrumb-item">
+            <a href="{{route('dashboard.index')}}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Order/</li>
+        <li class="breadcrumb-item active">
+            {{date("j-n-Y");}}
+        </li>
     </ol>
+     <div  class="d-flex justify-content-evenly "> 
+        
+        @php
+         $colors = [
+                    1=> "#ff0000",
+                    2=>"#2196f3",
+                    3=> "#5417c1",
+                    4=> "#03ad0a",
+                     ];
+        @endphp
+        @foreach($statuses as $s)
+        <div class="card col-2 ">
+            <div class="card-body d-flex justify-content-around ">
+                <div class="" >
+                    <h1>{{$s->orders_count}}</h1>
+                </div>
+                <div class="text-end card-info ">
+                    
+                    <span style="color:{{$colors[$s->id]}}" class="card-status-text">{{$s->name}}</span>
+                </div>
+            </div>
+        </div>
+        @endforeach
+        
+    </div>
     <div class="
             date-filter
             d-flex
@@ -49,8 +79,23 @@
 
         <div>
             <button class="btn btn-primary btn-filter">Filter</button>
+            <button class="btn btn-danger btn-remove-filter">Remove All filter</button>
         </div>
         
+    </div>
+  
+    
+    <div class="col-12  mb-2 d-flex justify-content-end align-items-center" id="statusOption">
+        
+         <div class="col-4 ">
+             <select class="form-select col-4" aria-label="Default select example">
+                <option value="" selected>All Orders</option>
+                @foreach($statuses as $k=>$s)
+              <option value="{{$s->id}}">{{$s->name}}</option>
+              
+              @endforeach
+            </select>
+         </div>
     </div>
 
     <div class="card mb-4">
@@ -91,14 +136,14 @@
         4: "#03ad0a",
         };
         fetchData();
-        function fetchData(start='',end=''){
+        function fetchData(start='',end='',mode=''){
             $("#ordertable").DataTable({
                     processing: true,
                     serverSide: true,
                     "destroy": true,
                     ajax: {
                         url: "{{ route('admin.order.list') }}",
-                        data: {start_date:start,end_date:end}
+                        data: {start_date:start,end_date:end,mode:mode}
                     
                     },
                      "aoColumnDefs": [
@@ -120,6 +165,7 @@
         $('.btn-filter').click(function(){
            start=$('#Start_date').val();
            end=$('#End_date').val();
+           let mode=$('select').val();
             if(start== ''||end==''){
                  $(`.error-start`).removeClass('d-none');
 
@@ -133,10 +179,18 @@
                  $(`.error-end`).addClass('d-none');
                  $('#ordertable').DataTable().destroy();
 
-              fetchData(start,end);
+              fetchData(start,end,mode);
                 }
            // console.log($start,$end);
            
+        })
+
+        $('.btn-remove-filter').click(function(){
+            $('#Start_date').val('');
+           $('#End_date').val('');
+           $('select').val('');
+           $('#ordertable').DataTable().destroy();
+           fetchData();
         })
         
 
@@ -204,6 +258,14 @@
         })
 
 
+
+       $('select').change(function(){
+        start=$('#Start_date').val();
+           end=$('#End_date').val();
+        let id=$(this).val();
+        $('#ordertable').DataTable().destroy();
+            fetchData(start,end,id);
+       })
        
 
 

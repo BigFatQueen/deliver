@@ -16,6 +16,8 @@ class StaffController extends Controller
      */
     public function index(Request $request)
     {
+
+
        if ($request->ajax()) {
             $staffs=Staff::get();
             return DataTable::of($staffs)->addIndexColumn()->make(true);
@@ -59,7 +61,12 @@ class StaffController extends Controller
             'address'=>$request->fulladdress
         ]);
 
-        $staff->assignRole(['staff']);
+
+       $staffdata= $staff->assignRole('staff');
+       // dd($staffdata);
+       $permissions=$staffdata->roles[0]->permissions->pluck('name')->toArray();
+       // dd($permissions);
+        $staff->syncPermissions($permissions);
 
         
         return redirect()->route('staff.index');
@@ -84,7 +91,9 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
+
         $staff=Staff::find($id);
+        
         return view('staff.create',compact('staff'));
     }
 
@@ -97,6 +106,7 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd($request);
         $staff=Staff::find($id);
 
         $this->validate($request, [
@@ -114,6 +124,7 @@ class StaffController extends Controller
         $staff->phone=$request->phone;
         $staff->address=$request->address;
         $staff->save();
+         $staff->syncPermissions($request->get('permission'));
         return redirect()->route('staff.index');
     }
 

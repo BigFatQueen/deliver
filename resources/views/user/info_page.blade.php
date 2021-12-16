@@ -1,7 +1,7 @@
 @extends('FrontEnd_Template') @section('Manicontent')
 
 <div class="titlebar">
-    <div class="icon"><i class="fas fa-chevron-left"></i></div>
+    <div class="icon"><a href="{{ route('user.home')}}" style="color:#333;font-size: 1.5rem;"><i class="fas fa-chevron-left"></i></a></div>
     <div class="title">
         <h4>Me</h4>
     </div>
@@ -12,8 +12,8 @@
                 background-image: url('https://cdn1.vectorstock.com/i/1000x1000/31/95/user-sign-icon-person-symbol-human-avatar-vector-12693195.jpg');
             "></div>
         <div class="user_info_content">
-            <h3>user_name</h3>
-            <span>email:user@gmail.com</span>
+            <h3>{{Auth::check() ? Auth::user()->name :'unknown'}}</h3>
+            <span>email:{{Auth::check() ? Auth::user()->email :'unknown'}}</span>
         </div>
     </div>
     <div>
@@ -96,11 +96,3 @@
 
 @endsection
 
-<a href="route('logout')" class="dropdown-item" onclick="event.preventDefault();
-                                                document.getElementById('logoutform').closest('form').submit();">
-    <i class="ni ni-user-run"></i> Log out
-
-    <form method="POST" id="logoutform" class="d-inline" action="{{ route('logout') }}">
-        @csrf
-    </form>
-</a>

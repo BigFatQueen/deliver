@@ -9,6 +9,17 @@ use Auth;
 
 class FrontEndController extends Controller
 {
+    public function userOrderbyStatus($statusid){
+        $userid=Auth::user()->id;
+       $orders=Order::with('contact','status')->whereHas('user',function($query)use($userid){
+        return $query->where('id',$userid);
+       })
+       ->whereHas('status',function($query)use($statusid){
+        return $query->where('id',$statusid);
+       })->get();
+       // dd($orders);
+       return response()->json(['data'=>$orders]);
+    }
     public function userHomePage(){
         return view('user.home');
     }
@@ -17,7 +28,8 @@ class FrontEndController extends Controller
     }
 
     public function userAddressList(){
-        $contacts=Contact::where('user_id',3)->get();
+
+        $contacts=Contact::where('user_id',Auth::user()->id)->get();
         return view('user.address_list_page',compact('contacts'));
     }
 
@@ -71,9 +83,18 @@ class FrontEndController extends Controller
     }
 
     public function orderSearch(Request $request){
+        $userid=Auth::user()->id;
        $keyword=$request->keyword;
+       $status=$request->status;
 
-       $orders=Order::with(['status','contact','contact.city','user'])->where('code', 'LIKE', "%{$keyword}%")->get();
+       $orders=Order::with(['status','contact','contact.city','user'])
+       ->whereHas('status',function($q)use($status){
+        return $q->where('id',$status);
+       })
+       ->whereHas('user',function($q)use($userid){
+        return $q->where('id',$userid);
+       })
+       ->where('code', 'LIKE', "%{$keyword}%")->get();
 
        if(count($orders) < 1){
         return response()->json(['status'=>404,'data'=>$orders]);

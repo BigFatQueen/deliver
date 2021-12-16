@@ -45,7 +45,7 @@ Route::get('/user/order/list', [FrontEndController::class, 'userOrderList'])->na
 Route::post('/order/search', [FrontEndController::class, 'orderSearch'])->name('order.search');
 Route::get('/user/home', [FrontEndController::class, 'userHomepage'])->name('user.home');
 
-
+Route::get('/get/orders/{status}',[FrontEndController::class,'userOrderbyStatus'])->name('user.order.status');
 
 
 
@@ -95,11 +95,18 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('/address')->group(function () {
         Route::get('/create/{id}', [ContactController::class, 'addressCreateByUid'])->name('admin.address.createbyui');
+
+
+        Route::get('/edit/{id}', [ContactController::class, 'addressEdit'])->name('admin.address.edit');
+
+        Route::get('/getall/{id}', [ContactController::class, 'addressbyuserid'])->name('admin.userid.addresses');
+
+
     });
 
     // customer start
     Route::prefix('/customer')->group(function () {
-        Route::get('/', [BackendController::class, 'customerIndex'])->name('customer.index');
+        Route::get('/', [BackendController::class, 'customerIndex'])->name('admin.customer.index');
     });
 
     Route::prefix('/rp')->group(function(){
@@ -138,6 +145,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 // excel import/export
+Route::get('file/import/read',[OrderController::class,'UserImportfileReading'])->name('user.file.reading');
 Route::get('file-import-export', [OrderController::class, 'fileImportExport']);
 Route::post('file-import', [OrderController::class, 'fileImport'])->name('file-import');
 Route::get('file-export', [OrderController::class, 'fileExport'])->name('file-export');

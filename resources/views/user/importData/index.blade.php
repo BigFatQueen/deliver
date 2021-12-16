@@ -1,33 +1,18 @@
-@extends('Backend_Template') @section('mainContent')
-<div class="col-10 mx-auto">
-    <h1 class="mt-4">Orders</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item">
-            <a href="{{route('dashboard.index')}}">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="{{route('admin.order.list')}}">Order</a>
-        </li>
-        <li class="breadcrumb-item active">Excel Import</li>
-    </ol>
-    <div>
-         <div class="card mb-4" id="addNewForm">
+@extends('FrontEnd_Template') @section('Manicontent')
+<div class="titlebar">
+    <div class="icon"><a href="{{ url()->previous()}}" style="color:#333;font-size: 1.5rem;"><i class="fas fa-chevron-left"></i></a></div>
+    <div class="title">
+        <h4>Import Order with Excel</h4>
+    </div>
+</div>
+ 
+         <div class="card m-3" id="addNewForm">
             <div class="card-header">Import Excel Report </div>
             <div class="card-body">
-                <form action="{{ route('admin.order.importExcel') }}" enctype="multipart/form-data" method="post">
+                <form action="{{route('file-import')}}" enctype="multipart/form-data" method="post">
                     @csrf
                     <div class="col row">
-                         <div class="col-auto">
-                            <label for="sender" class="col-form-label"> Sender </label>
-                                <select id="sender" class="form-select required senderChange" aria-label="Default select example " name="sender">
-                                    <option value="0" selected>Please choose Sender Name</option>
-                                    @foreach($customers as $k=>$customer)
-                                    <option value="{{$customer->id}}">
-                                        {{$customer->name}}
-                                    </option>
-                                    @endforeach
-                                </select>
-                        </div>
+                         
                         <div class="col-auto">
                             <label for="filename" class="col-form-label">Choose  file here</label>
                             <input
@@ -60,26 +45,26 @@
                 </form>
             </div>
         </div>
-    </div>
-    <div class="table-responsive hidden">
-        <h6 class="text-danger error-text d-none">Please add the correct address of Sender</h6>
-        <table id="order-table" class="table table-striped table-bordered"
-               style="width: 100%">
-            <thead>
-            <tr>
-                <td>Code</td>
-                <td>Recipient Name</td>
-                <td>Recipient phone</td>
-                <td>Address</td>
-                <td>weight</td>
-                <td>price</td>
-            </tr>
-            </thead>
-        </table>
-    </div>
-</div>
-@endsection
-@section("script")
+        <div class="container-fluid bg-white">
+        	<div class="table-responsive ">
+	        <h6 class="text-danger error-text d-none">Please add the correct address of Sender</h6>
+	        <table id="order-table" class="table table-striped table-bordered"
+	               style="width: 100%">
+	            <thead>
+	            <tr>
+	                <td>Code</td>
+	                <td>Recipient Name</td>
+	                <td>Recipient phone</td>
+	                <td>Address</td>
+	                <td>weight</td>
+	                <td>price</td>
+	            </tr>
+	            </thead>
+	        </table>
+	    </div>
+        </div>
+ @endsection
+ @section("script")
 <script type="text/javascript">
 
     let order_table = $("#order-table").DataTable({

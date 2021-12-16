@@ -7,9 +7,31 @@ use App\Models\Contact;
 use App\Models\City;
 use App\Models\User;
 use Auth;
+use DataTable;
 
 class ContactController extends Controller
 {
+    public function addressEdit($id){
+        if (!session()->has('url.intended')) {
+            session(['url.intended' => url()->previous()]);
+        }
+            $contact = Contact::find($id);
+        $cities = City::all();
+        return view('contact.contact_create', compact('contact', 'cities'));
+    }
+
+    public function addressbyuserid(Request $request,$userid){
+        $user=User::find($userid);
+       if($request->ajax()){
+
+        $addresses=Contact::with('city')->whereHas('user',function($q)use($userid){
+            return $q->where('id',$userid);
+        })->get();
+        // dd($addresses);
+        return DataTable::of($addresses)->addIndexColumn()->make(true);
+       }
+       return view('admin.user.addresses.list',compact('user'));
+    }
     /**
      * Display a listing of the resource.
      *
@@ -137,11 +159,15 @@ class ContactController extends Controller
 
             $prevroute = app('router')->getRoutes($redirectTo)->match(app('request')->create($redirectTo))->getName();
             session()->forget('url.intended');
+            // dd($prevroute);
         }
 
         if ($prevroute == "user.order.create") {
             return redirect($redirectTo);
-        } else {
+        }else if($prevroute == "admin.userid.addresses"){
+            return redirect($redirectTo);
+        }
+         else {
             return redirect('user/address/list');
         }
     }

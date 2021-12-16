@@ -292,6 +292,10 @@ class OrderController extends Controller
         return redirect()->route('admin.order.list');
      }
 
+     public function UserImportfileReading(){
+        return view('user.importData.index');
+     }
+
      public function fileImport(Request $request) 
     {
         // dd($request);

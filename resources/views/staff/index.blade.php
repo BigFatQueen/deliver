@@ -1,9 +1,9 @@
 @extends('Backend_Template') @section('mainContent')
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Role & Permission</h1>
+    <h1 class="mt-4">Staff Management</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-        <li class="breadcrumb-item active">Role & Permission</li>
+        <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Staff Lists</li>
     </ol>
     
     <div class="row">
@@ -61,8 +61,8 @@
                     {data:'email',name:'email' },
                     {data:'dob',name:'dob' },
                     {data:function(data){
-                    	return `<p><i class="fas fa-map-marker-alt"></i> ${data.address}</p>
-                    	<p><i class="fas fa-phone-alt"></i> ${data.phone}</p>`
+                    	return `<p><i class="fas fa-map-marker-alt"></i> ${data.address === null ? 'unknow':data.address}</p>
+                    	<p><i class="fas fa-phone-alt"></i> ${data.phone=== null ? 'unknow':data.phone}</p>`
                     } },
                     
                     
@@ -92,6 +92,7 @@
 			method:'DELETE',
 			success:function(res){
 				console.log(res);
+				$('#staffTable').DataTable().ajax.reload();
 			},
 			error:function(err){
 				console.log(err);

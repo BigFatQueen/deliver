@@ -2,8 +2,8 @@
 <div class="container-fluid px-4">
     <h1 class="mt-4">Role & Permission</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-        <li class="breadcrumb-item active">Role & Permission</li>
+        <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Dashboard</a></li>
+        <li class="breadcrumb-item active">New Staff</li>
     </ol>
 
     <div class="row">
@@ -83,10 +83,50 @@
                               </div>
                               
 
+
                              
                           </div>
                       </div>
+                      @if($staff->exists)
+                      @php 
+                      $roleName=$staff->roles[0]->name;
+                      $userPermission=$staff->getDirectPermissions()->pluck('name','id')->toArray();
+                      
+                      
+                      @endphp
 
+                      <div class="row px-4 col-8 mx-auto">
+                       
+                      <div class="col-3 mb-3 ">
+                           
+                                <h6 class="">Role Name :</h6>
+                            
+                            <div>
+                                <input type="radio" name="role" 
+                            
+                            class="form-check-input" value="{{$roleName}}" checked id="roleName">
+                            <label class="form-check-label" for="roleName">{{$roleName}}</label>
+                            </div>
+                            
+                       </div>
+                       <div class="col-9 row">
+                            
+                                <h6 class="px-0">Permissions :</h6>
+                            
+                           @foreach($staff->roles[0]->permissions as $permission)
+
+                              <div class="col-3 mb-3 form-check">
+                                <input type="checkbox" name="permission[]" 
+                                {{in_array($permission->name,$userPermission)? 'checked':''}}
+                                class="form-check-input" value="{{$permission->id}}" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">{{$permission->name}}</label>
+                              </div>
+                            @endforeach
+                       </div>
+                        
+                     </div>
+
+                     @endif
                       
                       <div class="col-6 mx-auto">
                           <button type="submit" class="btn btn-primary form-control">Submit Now!</button>
@@ -98,6 +138,8 @@
         </div>
 
     </div>
+
+
 
 
 

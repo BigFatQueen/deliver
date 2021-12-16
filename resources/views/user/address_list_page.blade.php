@@ -1,6 +1,6 @@
 @extends('FrontEnd_Template') @section('Manicontent')
 <div class="titlebar">
-    <div class="icon"><i class="fas fa-chevron-left"></i></div>
+    <div class="icon"><a href="{{ url()->previous()}}" style="color:#333;font-size: 1.5rem;"><i class="fas fa-chevron-left"></i></a></div>
     <div class="title">
         <h4>Address Management</h4>
     </div>

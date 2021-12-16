@@ -13,10 +13,11 @@
                     <span class="sub-title-phone">We will send a code(SMS) to your phone number</span>
                     <div class="form-div mt-3">
 
-                        <div class="mb-3">
+                        <div class="mb-3 mx-auto">
 
-                            <input type="phone" class="form-control" id="phone" name="phone" placeholder="+9590000000">
-
+                            <input type="phone" class="form-control" id="phone" name="phone">
+                            
+                            <span id="error-msg" class="hide text-danger"></span>
                         </div>
 
                         <div id="recaptcha-container"></div>
@@ -55,11 +56,15 @@
 
 
         <script type="text/javascript">
+
+
+
             window.onload = function() {
                 render();
 
                 // localStorage.removeItem('acc');
             };
+
 
 
             function render() {
@@ -70,9 +75,7 @@
 
             function phoneSendAuth() {
                 // console.log('helo');
-                var number = $("#phone").val();
-                console.log(number);
-
+                var number = init.getNumber();
                 let acc = localStorage.getItem('acc');
                 accObj = JSON.parse(acc);
                 accObj.phone = number;

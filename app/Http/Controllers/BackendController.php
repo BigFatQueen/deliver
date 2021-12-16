@@ -15,6 +15,7 @@ use App\Imports\OrderImport;
 use App\Http\Resources\ExcelResource;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Auth;
 
 
 class BackendController extends Controller
@@ -52,9 +53,9 @@ class BackendController extends Controller
     }
 
     public function roleDelete($id){
-        $role=Role::find($id)->delete();
+        $role=Role::find()->delete();
         return redirect()->route('admin.rp.index')
-                        ->with('success','Role deleted successfully');
+                        ->with('success','Role delte successfully');
     }
 
     public function roleUpdate(Request $request,$id){
@@ -114,7 +115,12 @@ class BackendController extends Controller
     }
 
     public function readExcel(Request $request){
+        // dd($request);
+
         $sender=$request->sender;
+        if($sender ==='undefined'){
+            $sender =Auth::user()->id;
+        }
         // dd($sender);
         $rows = Excel::toArray(new OrderImport, request()->file('file'));
 
@@ -158,21 +164,28 @@ class BackendController extends Controller
 
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $statuses=Status::withCount('orders')->get();
+        
+        return view('admin.dashboard',compact('statuses'));
     }
 
 
     //customer start
-    public function customerIndex()
+    public function customerIndex(Request $request)
     {
-        $users = User::role('customer')->get();
+        
         // dd($users);
-        return view('admin.user.customer_index', compact('users'));
+        if ($request->ajax()) {
+            $users = User::role('customer')->get();
+            return DataTable::of($users)->addIndexColumn()->make(true);
+         }
+        return view('admin.user.customer_index');
     }
 
     //admin crud order
 
     public function orderIndex(Request $request){
+            $statuses=Status::withCount('orders')->get();
                 $status=Status::all();
                  $statusControl='';
            
@@ -185,14 +198,25 @@ class BackendController extends Controller
                              ];
 
         if ($request->ajax()) {
-            if($request->get('start_date')){
+            if($request->get('start_date') && $request->get('end_date')){
                  $start = Carbon::parse($request->start_date)->format('Y-m-d ');
                 $end = Carbon::parse($request->end_date)->format('Y-m-d');
 
-        $orders = Order::whereBetween(DB::raw('date(order_date)'), [$start, $end])->get();
+                if($request->get('mode')){
+                $orders = Order::where('status_id',$request->mode)->whereBetween(DB::raw('date(order_date)'), [$start, $end])->get();
 
+                }else{
+                $orders = Order::whereBetween(DB::raw('date(order_date)'), [$start, $end])->get();
+                }
+
+
+                
             }else{
-                  $orders=Order::all();
+                if($request->get('mode')){
+                $orders = Order::where('status_id',$request->mode)->get();
+                }else{
+                $orders = Order::all();
+                }
             }
            $collection = collect($orders);
                  $unique = $collection->unique('order_code');
@@ -264,7 +288,7 @@ class BackendController extends Controller
                 ->toJson();
         }
 
-        return view('admin.order.list');
+        return view('admin.order.list',compact('statuses'));
     }
 
 
