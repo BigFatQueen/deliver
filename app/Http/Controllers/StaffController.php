@@ -124,6 +124,8 @@ class StaffController extends Controller
         $staff->phone=$request->phone;
         $staff->address=$request->address;
         $staff->save();
+
+       // dd($request->get('permission'));
          $staff->syncPermissions($request->get('permission'));
         return redirect()->route('staff.index');
     }

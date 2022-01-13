@@ -12,6 +12,7 @@ use App\Http\Controllers\StaffController;
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,10 +24,16 @@ use App\Http\Controllers\StaffController;
 |
 */
 
+Route::get('home/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\FrontEndController@changeLang']);
 
-Route::get('/', function () {
-    return view('FrontEnd_Template');
+Route::get('/mary', function () {
+    return view('welcome');
 });
+
+Route::get('/hitit',[CityController::class,'sayhitit'])->name('hit.it');
+
+
+
 Route::get('firebase', [FirebaseController::class, 'index']);
 // Route::view('customers','customers'); 
 
@@ -34,6 +41,12 @@ Route::get('firebase', [FirebaseController::class, 'index']);
 Route::resource('city', CityController::class);
 Route::resource('contact', ContactController::class);
 
+
+
+Route::group(['middleware' =>[ 'auth','role:customer']], function () {
+    Route::get('/', function () {
+    return view('FrontEnd_Template');
+    });
 
 //user route
 Route::get('/user/order', [OrderController::class, 'orderCreatedByUser'])->name('user.order.create');
@@ -57,12 +70,34 @@ Route::get('/order/{id}', [OrderController::class, 'orderDetail'])->name('user.o
 Route::delete('/order/{id}', [OrderController::class, 'orderDestroy'])->name('order.delete');
 
 
+    // excel import/export
+Route::get('file/import/read',[OrderController::class,'UserImportfileReading'])->name('user.file.reading');
+Route::get('file-import-export', [OrderController::class, 'fileImportExport']);
+Route::post('file-import', [OrderController::class, 'fileImport'])->name('file-import');
+Route::get('file-export', [OrderController::class, 'fileExport'])->name('file-export');
+});
+
+
 
 ///admin start---------------------------------
 
 
+Route::group(['middleware' => ['auth:web,staff','role:admin|staff','permission:order-status']],function(){
 
-Route::prefix('admin')->group(function () {
+Route::post('/s/change/',[OrderController::class,'changeOrderStatus'])->name('order.status.change');
+
+});
+
+
+
+
+
+
+
+Route::group(['prefix'=>'admin','middleware'=>['auth:web,staff']],function () {
+
+
+
 
     Route::get('/dashboard', [BackendController::class, 'dashboard'])->name('dashboard.index');
 
@@ -136,7 +171,10 @@ Route::prefix('admin')->group(function () {
 });
 
 //change order for admin and staff
-Route::post('/s/change/',[OrderController::class,'changeOrderStatus'])->name('order.status.change');
+
+// Route::group(['middleware'=>['auth','role:admin|staff','permission:publish order-status']],function () {
+//         Route::get('/', [BackendController::class, 'customerIndex'])->name('admin.customer.index');
+//     })
 
 
 
@@ -144,11 +182,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-// excel import/export
-Route::get('file/import/read',[OrderController::class,'UserImportfileReading'])->name('user.file.reading');
-Route::get('file-import-export', [OrderController::class, 'fileImportExport']);
-Route::post('file-import', [OrderController::class, 'fileImport'])->name('file-import');
-Route::get('file-export', [OrderController::class, 'fileExport'])->name('file-export');
+
 
 
 require __DIR__ . '/auth.php';

@@ -39,6 +39,8 @@ class Handler extends ExceptionHandler
         });
     }
 
+    
+
     // protected function unauthenticated($request, AuthenticationException $exception)
     // {
     //     if ($request->expectsJson()) {

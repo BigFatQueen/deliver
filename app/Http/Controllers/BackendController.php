@@ -76,10 +76,11 @@ class BackendController extends Controller
 
     public function roleEdit($id){
         $role=Role::find($id);
+
        // dd($role);
         $rolePermissions=$role->permissions->pluck('name')->toArray();
         // dd($rolePermissions);
-        $permissions = Permission::get();
+        $permissions = Permission::where('guard_name',$role->guard_name)->get();
 
         return view('admin.rp.role_edit',compact('role', 'rolePermissions', 'permissions'));
     }

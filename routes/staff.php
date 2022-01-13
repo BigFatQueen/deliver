@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Staff\Auth\LoginController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StaffController;
 
 Route::name('staffs.')->namespace('Staff')->prefix('staffs')->group(function(){

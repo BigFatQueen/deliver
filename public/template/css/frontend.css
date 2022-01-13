@@ -273,10 +273,11 @@ input {
 
 .my-card .status {
     color: #ff0000;
-    border: 1px solid #ff0000;
-    display: inline-block;
+   
     border-radius: 40px;
-    margin-top: 16px;
+    padding: 5px 10px;
+    
+
 }
 
 
@@ -382,3 +383,47 @@ input {
         color: #fff;
     }
 }
+/*card detail start=================================================================*/
+
+.detail-grid{
+    display: grid;
+    grid-template-columns: [first] 40% [end] auto;
+    column-gap: 10px;
+    row-gap: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

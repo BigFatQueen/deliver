@@ -14,7 +14,7 @@ class Staff extends Authenticatable
     use HasFactory,HasRoles, Notifiable;
     protected $table='staffs';
     protected $guard='staff';
-    protected $guard_name="web";
+    protected $guard_name="staff";
     protected $fillable = [
             'name', 'email', 'password','dob','phone','address'
         ];

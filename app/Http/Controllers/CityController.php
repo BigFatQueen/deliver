@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\City;
+use App\Events\NewComment;
+use Auth;
 
 class CityController extends Controller
 {
+    public function sayhitit(){
+
+        dd(Auth::guard('staff')->user()->name);
+        event(new NewComment('hello world'));
+        return back();
+    }
     /**
      * Display a listing of the resource.
      *

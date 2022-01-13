@@ -136,7 +136,11 @@ class OrderController extends Controller
     function orderDetail($id)
     {
         $order = Order::find($id);
-        return view('user.order_detail', compact('order'));
+        $others=collect(Order::where('order_code',$order->order_code)->get(['code']));
+        $others=$others->groupBy('code')->keys()->all();
+        $others=implode(',', $others);
+       
+        return view('user.order_detail', compact('order','others'));
     }
 
     function orderDestroy($id)

@@ -6,9 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Models\Order;
 use Auth;
+use App;
+use Session;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Config;
 
 class FrontEndController extends Controller
 {
+    public function changeLang($lang){
+      if (array_key_exists($lang, Config::get('languages'))) {
+            Session::put('applocale', $lang);
+        }
+        return Redirect::back();
+    }
     public function userOrderbyStatus($statusid){
         $userid=Auth::user()->id;
        $orders=Order::with('contact','status')->whereHas('user',function($query)use($userid){

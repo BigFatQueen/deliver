@@ -11,7 +11,7 @@
     <div class="row">
     	<div class="col-12">
     		<div class="text-end">
-    			<a href="{{route('admin.rp.role.create')}}"  class="btn btn-outline-success" >+ Add Role</a>
+    			<a href="{{route('admin.rp.role.create')}}"  class="btn btn-outline-success d-none" >+ Add Role</a>
     		</div>
     		
     		<div class="card-body table-responsive">
@@ -33,7 +33,7 @@
 	                		<td><i class="fas fa-user "></i> {{$r->name}}</td>
 	                		<td>
 	                			
-	                			<button class="btn btn-info btn-edit" data-id="{{$r->id}}"
+	                			<button class="btn btn-info " data-id="{{$r->id}}"
 	                				data-type="{{$r->name}}"
 	                				>Info</button>
 	                				<a href="{{route('admin.rp.role.edit',$r->id)}}" class="btn btn-warning btn-edit" >Edit</a>
@@ -83,12 +83,17 @@
 			url:url,
 			type:'get',
 			success:(res)=>{
+				console.log(res);
 				if(res.length >0){
 					$.each(res,function(i,v){
 						html+=`<li style="
     display: block;"> <i class="fas fa-check-circle text-success"></i> ${v.name}</li>`
 
 					})
+					$('#rolePermission').html(html);
+				}else{
+					html+=`<li style="
+    display: block;color:red;">  No permission Assigned!</li>`
 					$('#rolePermission').html(html);
 				}
 			},

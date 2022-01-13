@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+         $loader = $this->app['translation.loader'];
+         $loader->addJsonPath(base_path('resources/lang/mm'));
     }
 }

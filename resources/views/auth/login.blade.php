@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="wrapper">
-        <h5>Registration</h5>
+        <h5>{{__("Login")}}</h5>
         <div class="cus-container">
             <div class="logo-img"></div>
             <h3>Shipper </h3>
@@ -9,12 +9,12 @@
             <form method="POST" action="{{ route('login') }}" class="form-div">
                 @csrf
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email </label>
+                    <label for="email" class="form-label">{{__('Email')}} </label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password </label>
+                    <label for="password" class="form-label">{{__('Password')}} </label>
                     <input type="password" class="form-control" id="password" name="password">
                 </div>
 
@@ -22,7 +22,7 @@
 
             </form>
             <span class="sub-title2">
-                Needed an Account? <a href="{{route('register')}}">Sign Up</a>
+                {{__('Needed an Account')}}? <a href="{{route('register')}}">{{__('Sign Up')}}</a>
             </span>
 
         </div>

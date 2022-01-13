@@ -25,12 +25,13 @@ class LoginController extends Controller
     {
         
          $credentials = $request->except(['_token']);
-        
+      
          if($this->isStaffActive($request->email)){
-            //dd('now you are here!');
+           // dd('now you are here!');
+              //dd($credentials);
              if(Auth::guard('staff')->attempt($credentials))
             { 
-                // dd('you made it');
+                 //dd('you made it');
                 //auth('staff')->attempt($credentials));
                  return redirect(RouteServiceProvider::STAFF);
             }

@@ -64,13 +64,13 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i
                     ></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li>
+                        <!-- <li><a class="dropdown-item" href="#!">Settings</a></li> -->
+                       <!--  <li>
                             <a class="dropdown-item" href="#!">Activity Log</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider" />
-                        </li>
+                        </li> -->
                         <li>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -150,7 +150,11 @@
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        {{Auth::check() ? Auth::guard('web')->user()->name :'unknown'}}
+                        @if(Auth::guard('web')->check())
+                            Hello {{Auth::guard('web')->user()->name}}
+                        @elseif(Auth::guard('staff')->check())
+                            Hello {{Auth::guard('staff')->user()->name}}
+                        @endif
                     </div>
                 </nav>
             </div>

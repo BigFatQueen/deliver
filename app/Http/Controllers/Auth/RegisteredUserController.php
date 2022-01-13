@@ -50,6 +50,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $user->assignRole('customer');
+        $user->getPermissionsViaRoles();
 
         event(new Registered($user));
 

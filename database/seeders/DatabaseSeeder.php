@@ -12,6 +12,7 @@ use App\Models\User;
 
 use App\Models\City;
 use App\Models\Status;
+use App\Models\Staff;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,14 +23,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
         $array=['admin','staff','customer'];
            foreach($array as $a){
-             Role::create([
-                'name'=>$a
+            if($a === 'staff'){
+                Role::create([
+                'name'=>$a,
+                'guard_name'=>'staff'
              ]);
+            }else{
+                Role::create([
+                'name'=>$a,
+                'guard_name'=>'web'
+             ]);
+            }
+
            }
+        // \App\Models\User::factory(10)->create();
+        $this->call(PermissionTableSeeder::class);
+
+        
 
          $administrator = User::create([
         'name' => 'Super Admin',
@@ -39,8 +51,9 @@ class DatabaseSeeder extends Seeder
       ]);
 
       $administrator->assignRole('admin');
+      $administrator->syncPermissions($administrator->getPermissionsViaRoles());
 
-      $staff = User::create([
+      $staff = Staff::create([
         'name' => 'Super Staff',
         'email' => 'staff@gmail.com',
          'phone' => '+959876543',
@@ -48,6 +61,7 @@ class DatabaseSeeder extends Seeder
       ]);
 
       $staff->assignRole('staff');
+      $staff->syncPermissions($staff->getPermissionsViaRoles());
 
       $this->citySeeding();
       $this->statusSeeding();

@@ -49,7 +49,7 @@ class ContactController extends Controller
      */
     public function create()
     {
-
+        session()->forget('url.intended');
         if (!session()->has('url.intended')) {
             session(['url.intended' => url()->previous()]);
         }
@@ -74,7 +74,7 @@ class ContactController extends Controller
         }
 
         // dd($id);
-        //  $redirect=null;
+          $redirectTo=null;
         $request->validate([
             'city_id' => 'required|not_in:0',
             'fulladdress' => 'required',
@@ -92,24 +92,22 @@ class ContactController extends Controller
 
         if (session()->has('url.intended')) {
             $redirectTo = session()->get('url.intended');
-
+             
             $prevroute = app('router')->getRoutes($redirectTo)->match(app('request')->create($redirectTo))->getName();
-            session()->forget('url.intended');
-        }
+            
+            
+             if ($prevroute == "user.order.create") {
+            return redirect()->route($prevroute);
+            } 
 
-        if ($prevroute == "user.order.create") {
-            return redirect($redirectTo);
-        } else if ($prevroute == "admin.order.create") {
-            return redirect($redirectTo);
-        } else {
+            if ($prevroute == "admin.order.create") {
+                return redirect()->route($prevroute);
+
+        }else{
             return redirect('user/address/list');
         }
 
-
-
-        /* if ($redirectTo) {
-            return redirect($redirectTo);
-        }*/
+       }
     }
 
     /**

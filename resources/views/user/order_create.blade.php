@@ -2,7 +2,7 @@
 <div class="titlebar">
     <div class="icon"><i class="fas fa-chevron-left"></i></div>
     <div class="title">
-        <h4>New Order</h4>
+        <h4>{{__('New Order')}}</h4>
     </div>
 </div>
 <form class="px-2 mt-5" id="handleSubmit" autocomplete="off">
@@ -10,7 +10,7 @@
 
     <div class="mb-3 row">
         <label for="staticEmail" class="col-3 col-form-label">
-            Warehouse
+            {{__('Warehouse')}}
         </label>
         <div class="col-9 cus-input-fromControl">
             <input type="text" readonly class="form-control-plaintext required" id="staticEmail" value="expresskoko" />
@@ -19,19 +19,20 @@
     <hr />
     <div class="mb-3 row">
         <label for="codes" class="col-3 col-form-label">
-            China logistic number
+            {{__('China logistic number')}}
         </label>
-        <div class="col-9 cus-input-fromControl">
+        <div class="col-9 cus-input-fromControl" style="display: block;">
             <input type="text" class="form-control-plaintext required countQty" id="codes" name="codes" placeholder="Please enter china logistic number" />
+            <span style="color:#333;font-size: 0.725rem;">Note:  please use ',' if you got more than one. example: 123,345,345</span>
         </div>
     </div>
     <hr />
 
     <div class="mb-4 row">
-        <label for="contact" class="col-3 col-form-label"> Address </label>
+        <label for="contact" class="col-3 col-form-label"> {{__('Address')}} </label>
         <div class="col-9 addressForm">
             <select id="contact" class="form-select required" aria-label="Default select example " name="contact_id">
-                <option value="0" selected>Please choose one</option>
+                <option value="0" selected>{{__('Please choose one')}}</option>
                 @foreach($contacts as $k=>$contact)
                 <option value="{{$contact->id}}">
                     No({{$contact->id}}) .
@@ -45,16 +46,16 @@
 
     <hr />
     <div class="mb-3 row">
-        <label for="name" class="col-3 col-form-label"> Recipient Name </label>
+        <label for="name" class="col-3 col-form-label"> {{__('Recipient Name')}} </label>
         <div class="col-9 cus-input-fromControl">
-            <input type="text" class="form-control-plaintext required" id="name" name="name" placeholder="plases enter Recipient Name" />
+            <input type="text" class="form-control-plaintext required" id="name" name="name" placeholder='{{__("plases enter Recipient Name")}}'/>
         </div>
     </div>
     <hr />
 
     <div class="mb-3 row">
         <label for="phone" class="col-3 col-form-label">
-            Recipient phone number
+            {{__('Recipient phone number')}}
         </label>
         <div class="col-9 cus-input-fromControl">
             <input type="number" class="form-control-plaintext required" id="phone" name="phone" placeholder="please enter Recipient phone number" />
@@ -64,7 +65,7 @@
 
     <div class="mb-3 row">
         <label for="Goodsqty" class="col-3 col-form-label">
-            Numbers of Box
+            {{__('Numbers of Box')}}
         </label>
         <div class="col-9 cus-input-fromControl">
             <input type="number" class="form-control-plaintext required" id="Goodsqty" name="qty" placeholder="please enter good number" />
@@ -72,15 +73,15 @@
     </div>
     <hr />
     <div class="mb-3 row">
-        <label for="wieight" class="col-3 col-form-label"> Total Weight </label>
+        <label for="wieight" class="col-3 col-form-label"> {{__('Total Weight')}} </label>
         <div class="col-9 cus-input-fromControl">
             <input type="number" class="form-control-plaintext required" id="weight" name="weight" placeholder="please enter good total wieight" />
-            <h6>Kg</h6>
+            <h6>{{__('Kg')}}</h6>
         </div>
     </div>
     <hr />
     <div class="mb-3 row">
-        <label for="goodNames" class="col-3 col-form-label"> Goods Name </label>
+        <label for="goodNames" class="col-3 col-form-label"> {{__('Goods Name')}} </label>
         <div class="col-9 cus-input-fromControl">
             <input type="text" class="form-control-plaintext" id="goodNames" name="goodsNames" placeholder="please enter good names" />
         </div>
@@ -88,7 +89,7 @@
     <hr />
     <div class="mb-3 row">
         <label for="price" class="col-3 col-form-label">
-            Prices of Goods
+            {{__('Prices of Goods')}}
         </label>
         <div class="col-9 cus-input-fromControl">
             <input type="text" class="form-control-plaintext required" id="price" name="price" placeholder="please enter total price of Goods" />
@@ -96,7 +97,8 @@
     </div>
     <input type="submit" value="Order Now" class="btn btn-primary form-control" />
 </form>
-@endsection @section('script')
+@endsection
+@section('script')
 <script>
     const errors = {
         codes: "Please enter china logistic number",
@@ -310,6 +312,7 @@
                 value,
                 type
             } = el;
+
             if (value == "") {
                 showError(errors[name]);
                 return false;
@@ -327,7 +330,7 @@
 
     function showError(text) {
         Swal.fire({
-            text: `${text}`,
+            text: `${"{{__("+text+")}}"}`,
             showConfirmButton: false,
             timer: 2000,
             showClass: {

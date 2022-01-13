@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
     <head>
         <meta charset="utf-8" />
@@ -23,15 +23,15 @@
             <div class="container-fluid mynav">
                 <a class="btn btn-default mynav-link" href="{{ route('user.home') }}">
                     <i class="fas fa-home"></i>
-                    <span>Home</span>
+                    <span>{{ __('HOME') }}</span>
                 </a>
                 <a href="{{ route('user.order.list') }}" class="btn btn-default mynav-link">
                     <i class="fas fa-clipboard"></i>
-                    <span>Order</span>
+                    <span>{{__('Order')}}</span>
                 </a>
                 <a href="{{ route('user.info') }}" class="btn btn-default mynav-link">
                     <i class="fas fa-user"></i>
-                    <span>info</span>
+                    <span>{{__('Info')}}</span>
                 </a>
             </div>
         </nav>

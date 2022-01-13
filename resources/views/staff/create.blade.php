@@ -91,8 +91,7 @@
                       @php 
                       $roleName=$staff->roles[0]->name;
                       $userPermission=$staff->getDirectPermissions()->pluck('name','id')->toArray();
-                      
-                      
+                       
                       @endphp
 
                       <div class="row px-4 col-8 mx-auto">

@@ -6,11 +6,11 @@
             <a
                 href="{{ route('user.order.create') }}"
                 class="btn btn-primary form-control"
-                >Add order</a
-            >
-            <a href="{{route('user.file.reading')}}" class="btn btn-primary form-control  mt-2 " > Import Order </a>
+                > {{__('Add Order')}}</a
+            > 
+            <a href="{{route('user.file.reading')}}" class="btn btn-primary form-control  mt-2 " >  @lang('Import Order') </a>
 
-            <a class="btn btn-primary form-control d-none mt-2 import" > Import Order </a>
+            <a class="btn btn-primary form-control d-none mt-2 import" > @lang('Import Order')</a>
             <form class="d-none" action="{{route('file-import')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="file" name="file" id="fileImport" >

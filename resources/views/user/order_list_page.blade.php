@@ -2,17 +2,22 @@
 <ul class="nav nav-pills mb-3 my-cus-tab"  id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-home-tab" data-ddid="1" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
-            Pending to WareHouse
+            {{__('Pending to WareHouse')}}
         </button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-profile-tab" data-ddid="2" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
-            WareHouse
+            {{__('WareHouse')}}
         </button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-contact-tab" data-ddid="3" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">
-            In Transist
+            {{__('In Transist')}}
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-contact-tab" data-ddid="4" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">
+            {{__('Arrived Myanmar Warehouse')}}
         </button>
     </li>
 </ul>
@@ -50,6 +55,22 @@
         <div class="resultCard"></div>
     </div>
     <div class="tab-pane fade" id="pills-contact" data-ddid=3  role="tabpanel" aria-labelledby="pills-contact-tab">
+        {{-- card start here --}}
+        <div class="search-Field">
+            <h5>Track Your Parcel</h5>
+            <span>Enter parcel number to start tracking</span>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control searchOrder-input" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
+                <button class="btn input-group-text" id="inputGroup-sizing-sm">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="Loading">Loading...</div>
+        <!-- end here -->
+        <div class="resultCard"></div>
+    </div>
+     <div class="tab-pane fade" id="pills-contact" data-ddid=4  role="tabpanel" aria-labelledby="pills-contact-tab">
         {{-- card start here --}}
         <div class="search-Field">
             <h5>Track Your Parcel</h5>
@@ -166,7 +187,7 @@
         // window.location.href = url;
     });
 
-    $("#order-div").on("click", ".order-detail", function() {
+    $(".resultCard").on("click", ".order-detail", function() {
         // alert("helo");
         let id = $(this).data("id");
         gotoDetail(id);

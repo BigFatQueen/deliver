@@ -30,19 +30,28 @@ class PermissionTableSeeder extends Seeder
         ];
      
         foreach ($permissions as $permission) {
-             Permission::create(['name' => $permission]);
+             Permission::create(['name' => $permission,'guard_name'=>'web']);
         }
 
-        $role=Role::find(1);
-        $role2=Role::find(2);
+        foreach ($permissions as $permission) {
+             Permission::create(['name' => $permission,'guard_name'=>'staff']);
+        }
 
+        $role=Role::where('name','customer')->first();
+        $role2=Role::where('name','admin')->first();
+        $role3=Role::where('name','staff')->first();
         
         
-         $permissions = Permission::pluck('id','id')->all();
+         $allpermissions = Permission::where('guard_name','web')->pluck('id','id')->all();
+           $staffpermissions = Permission::where('guard_name','staff')->pluck('id','id')->all();
         
-   
-       $role->syncPermissions($permissions);
-       $role2->givePermissionTo('order-status');
+        $role->givePermissionTo(['order-list',
+           'order-create',
+           'order-edit',
+           'order-delete']);
+       $role2->syncPermissions($allpermissions);
+       $role3->syncPermissions($staffpermissions);
+       
       
     }
 }

@@ -30,6 +30,7 @@
     </head>
 
     <body>
+
         <div class="font-sans text-gray-900 antialiased">
             {{ $slot }}
         </div>
@@ -41,8 +42,8 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-         var input = document.querySelector("#phone"),
-          errorMsg = document.querySelector("#error-msg"),
+         
+          errorMsg = document.querySelector("#error-msg");
     validMsg = document.querySelector("#valid-msg");
          var reset = function() {
                         input.classList.remove("error");
@@ -53,7 +54,7 @@
 
         // Error messages based on the code returned from getValidationError
 var errorMap = [ "Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
-
+var input = document.getElementById("verifyphone");
         var init=  intlTelInput(input, {
     initialCountry: "auto",
      customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
@@ -67,6 +68,7 @@ var errorMap = [ "Invalid number", "Invalid country code", "Too short", "Too lon
     },
     utilsScript: "{{asset('template/build/js/utils.js')}}"
 });
+        
         input.addEventListener('blur', function() {
             reset();
             if(input.value.trim()){

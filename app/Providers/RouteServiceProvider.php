@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/redirect';
+    public const HOME = '/';
     public const STAFF = '/staff/';
 
     protected $staffnamespace = 'App\\Http\\Controllers';

@@ -67,9 +67,8 @@
                     
                     
                     {data:function(data){
-                    	return `<button class="btn btn-warning btn-edit" data-id="${data.id}">Edit</button>
-                    	<button class="btn btn-danger btn-delete" data-id="${data.id}">Delete</button>
-                    	<button class="btn btn-primary btn-revoke" data-id="${data.id}">Revoke Role</button>
+                    	return `<button class="btn btn-info btn-edit text-white" data-id="${data.id}">Edit & Revoke Role</button>
+                    	<button class="btn btn-danger btn-delete" data-id="${data.id}">Remove</button>
                     	`
                     }},
                     ]

@@ -15,7 +15,7 @@
 
                         <div class="mb-3 mx-auto">
 
-                            <input type="phone" class="form-control" id="phone" name="phone">
+                            <input type="phone" class="form-control" id="verifyphone" name="phone">
                             
                             <span id="error-msg" class="hide text-danger"></span>
                         </div>
@@ -63,7 +63,10 @@
                 render();
 
                 // localStorage.removeItem('acc');
+
             };
+
+
 
 
 
